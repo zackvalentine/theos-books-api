@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+    id('org.springframework.boot') version '2.4.3'
+    id('idea')
+}
+
+group 'com.doestheohavethisbook'
+version 'SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integrationTest/java')
+        resources.srcDir('src/integrationTest/resources')
+//        compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+//        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntime
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.4.3'
+    integrationTestImplementation group: 'junit', name: 'junit', version: '4.12'
+    integrationTestImplementation 'com.konghq:unirest-java:2.3.11'
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
+}
+
+test {
+    useJUnitPlatform()
+}

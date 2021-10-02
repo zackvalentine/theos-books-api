@@ -1,0 +1,23 @@
+version: '2.1'
+services:
+  books-api:
+    container_name: books-api
+    image: books-api:SNAPSHOT
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      JAVA_ENV: local
+      PORT: 8080
+    networks:
+      books:
+        ipv4_address: 10.128.17.9
+
+networks:
+  books:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.128.17.0/24
