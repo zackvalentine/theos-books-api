@@ -27,6 +27,7 @@ dependencies {
     integrationTestImplementation 'com.konghq:unirest-java:2.3.11'
     integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
+    testImplementation 'org.easymock:easymock:4.0.2'
     testImplementation group: 'junit', name: 'junit', version: '4.12'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.4.3'
