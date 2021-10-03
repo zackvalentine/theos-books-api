@@ -6,7 +6,9 @@ import org.junit.Test;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -14,14 +16,20 @@ import static org.junit.Assert.assertThat;
 public class BooksTests {
     @Test
     public void whenICallGetBooks_thenReturnsHardcodedBooks() {
-        IntegrationTestBook integrationTestBook1 = new IntegrationTestBook("Test Book", "Test Author");
-        IntegrationTestBook integrationTestBook2 = new IntegrationTestBook("Second Book", "Another Author");
-        List<IntegrationTestBook> expectedIntegrationTestBooks = List.of(integrationTestBook1, integrationTestBook2);
+        Map<String, Object> firstBook = new HashMap<>();
+        Map<String, Object> secondBook = new HashMap<>();
+        firstBook.put("title", "Test Book");
+        firstBook.put("author", "Test Author");
+        secondBook.put("title", "Second Book");
+        secondBook.put("author", "Another Author");
         JSONArray response = Unirest.get("http://localhost:8080/books")
                 .asJson()
                 .getBody()
                 .getArray();
 
-        assertThat(response, is(expectedIntegrationTestBooks));
+        Map<String, Object> actualFirstBook = response.getJSONObject(0).toMap();
+        Map<String, Object> actualSecondBook = response.getJSONObject(1).toMap();
+        assertThat(actualFirstBook, is(firstBook));
+        assertThat(actualSecondBook, is(secondBook));
     }
 }
