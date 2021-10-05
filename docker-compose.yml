@@ -14,6 +14,33 @@ services:
       books:
         ipv4_address: 10.128.17.9
 
+  postgres:
+    container_name: postgres
+    image: 'postgres:latest'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: books
+      POSTGRES_SCHEMA: books
+
+  flyway:
+    container_name: flyway
+    environment:
+      - FLYWAY_USER=user
+      - FLYWAY_PASSWORD=pass
+      - FLYWAY_URL=jdbc:postgresql://postgres:5432/books
+      - FLYWAY_SCHEMAS=flyway,books
+      - FLYWAY_GROUP=true
+    image: flyway/flyway:latest
+    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - $PWD/sql_versions:/flyway/sql
+    depends_on:
+      - postgres
+
+
 networks:
   books:
     driver: bridge
