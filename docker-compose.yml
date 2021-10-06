@@ -13,6 +13,9 @@ services:
     networks:
       books:
         ipv4_address: 10.128.17.9
+    depends_on:
+      - postgres
+      - flyway
 
   postgres:
     container_name: postgres
