@@ -26,7 +26,9 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: books
-      POSTGRES_SCHEMA: books
+    networks:
+      books:
+        ipv4_address: 10.128.17.8
 
   flyway:
     container_name: flyway
@@ -34,14 +36,15 @@ services:
       - FLYWAY_USER=user
       - FLYWAY_PASSWORD=pass
       - FLYWAY_URL=jdbc:postgresql://postgres:5432/books
-      - FLYWAY_SCHEMAS=flyway,books
       - FLYWAY_GROUP=true
+      - FLYWAY_VALIDATE_ON_MIGRATE=true
+      - FLYWAY_BASELINE_ON_MIGRATE=false
     image: flyway/flyway:latest
-    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
-    volumes:
-      - $PWD/sql_versions:/flyway/sql
     depends_on:
       - postgres
+    networks:
+      books:
+        ipv4_address: 10.128.17.7
 
 
 networks:
