@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class AuthorServiceImpl implements AuthorService {
     @Autowired
-    private BookRepository repository;
+    private AuthorRepository repository;
 
     @Override
-    public List<Book> getAllBooks() {
-        return (List<Book>) repository.findAll();
+    public List<Author> getAllAuthors() {
+        return (List<Author>) repository.findAll();
     }
 }

@@ -5,8 +5,8 @@ import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
-import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -17,26 +17,25 @@ import static org.easymock.EasyMock.expect;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(EasyMockRunner.class)
-public class BooksControllerTests extends EasyMockSupport {
+public class AuthorsControllerTests extends EasyMockSupport {
     @Mock
-    private final BookService bookService = new BookServiceImpl();
+    private final AuthorService authorService = new AuthorServiceImpl();
 
     @TestSubject
-    private final BooksController controller = new BooksController();
+    private final AuthorsController controller = new AuthorsController();
 
     @Test
     public void whenGetBooksCalled_thenCallsService() {
-        Author author = new Author("Kent", "Beck", UUID.randomUUID());
-        Book book1 = new Book("Test Book", author);
-        Book book2 = new Book("Second Book", author);
-        List<Book> expectedBooks = List.of(book1, book2);
-        expect(bookService.getAllBooks()).andReturn(expectedBooks);
+        Author author1 = new Author("Bob", "Martin", UUID.randomUUID());
+        Author author2 = new Author("Martin", "Fowler", UUID.randomUUID());
+        List<Author> expectedAuthors = List.of(author1, author2);
+        expect(authorService.getAllAuthors()).andReturn(expectedAuthors);
         replayAll();
 
-        ResponseEntity<List<Book>> result = controller.getAllBooks();
+        ResponseEntity<List<Author>> result = controller.getAllAuthors();
 
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(expectedBooks, result.getBody());
+        assertEquals(expectedAuthors, result.getBody());
         verifyAll();
     }
 }

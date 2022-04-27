@@ -1,16 +1,32 @@
 package com.doestheohavethisbook;
 
+import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
+@Entity
+@Table(name = "books")
 public class Book {
-    public Book(String title, String author) {
+    @Id
+    @GeneratedValue
+    @Column(name = "book_id")
+    private UUID id;
+
+    public Book(String title, Author author) {
         this.title = title;
         this.author = author;
     }
 
+    @Column
     private String title;
 
-    private String author;
+    @ManyToOne
+    @JoinColumn(name="author_id", nullable=true)
+    private Author author;
+
+    public Book() {
+
+    }
 
     public String getTitle() {
         return title;
@@ -20,11 +36,11 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
@@ -39,5 +55,18 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(title, author);
+    }
+
+    @Override
+    public String toString() {
+        return this.title + " by " + this.author.getFirstName() + " " + this.author.getLastName();
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
