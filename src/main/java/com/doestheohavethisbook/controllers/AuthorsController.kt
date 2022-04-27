@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/authors")
-public class AuthorsController {
+class AuthorsController {
     @Autowired
-    private AuthorService authorService;
+    lateinit var authorService: AuthorService
 
     @GetMapping
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        return new ResponseEntity<>(authorService.getAllAuthors(), HttpStatus.OK);
+    fun getAllAuthors(): ResponseEntity<List<Author>> {
+        return ResponseEntity(authorService.getAllAuthors(), HttpStatus.OK)
     }
 }

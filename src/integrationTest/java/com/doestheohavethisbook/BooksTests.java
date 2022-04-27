@@ -15,8 +15,8 @@ public class BooksTests {
     public void whenICallGetBooks_thenReturnsSeededTestBooks() {
         Map<String, Object> firstBook = new HashMap<>();
         Map<String, Object> secondBook = new HashMap<>();
-        firstBook.put("title", "Test Book");
-        secondBook.put("title", "Second Book");
+        firstBook.put("title", "Clean Code");
+        secondBook.put("title", "The Clean Coder");
         JSONArray response = Unirest.get("http://localhost:8080/books")
                 .asJson()
                 .getBody()
