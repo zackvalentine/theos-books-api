@@ -19,7 +19,6 @@ public class BooksController {
     @CrossOrigin
     @GetMapping
     public ResponseEntity<List<Book>> getAllBooks() {
-        System.out.println("Received a call to /books, calling the service.");
         return new ResponseEntity<>(bookService.getAllBooks(), HttpStatus.OK);
     }
 }

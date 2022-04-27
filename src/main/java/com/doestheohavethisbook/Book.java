@@ -12,16 +12,17 @@ public class Book {
     @Column(name = "book_id")
     private UUID id;
 
-    public Book(String title, UUID authorId) {
+    public Book(String title, Author author) {
         this.title = title;
-        this.authorId = authorId;
+        this.author = author;
     }
 
     @Column
     private String title;
 
-    @Column(name = "author_id")
-    private UUID authorId;
+    @ManyToOne
+    @JoinColumn(name="author_id", nullable=true)
+    private Author author;
 
     public Book() {
 
@@ -35,12 +36,12 @@ public class Book {
         this.title = title;
     }
 
-    public UUID getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(UUID authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     @Override
@@ -48,12 +49,17 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(title, book.title) && Objects.equals(authorId, book.authorId);
+        return Objects.equals(title, book.title) && Objects.equals(author, book.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, authorId);
+        return Objects.hash(title, author);
+    }
+
+    @Override
+    public String toString() {
+        return this.title + " by " + this.author.getFirstName() + " " + this.author.getLastName();
     }
 
     public void setId(UUID id) {

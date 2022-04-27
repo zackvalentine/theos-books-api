@@ -1,15 +1,12 @@
 package com.doestheohavethisbook.controllers;
 
-import com.doestheohavethisbook.Book;
-import com.doestheohavethisbook.BookService;
-import com.doestheohavethisbook.BookServiceImpl;
-import com.doestheohavethisbook.BooksController;
+import com.doestheohavethisbook.*;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
-import org.junit.runner.RunWith;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -29,8 +26,9 @@ public class BooksControllerTests extends EasyMockSupport {
 
     @Test
     public void whenGetBooksCalled_thenCallsService() {
-        Book book1 = new Book("Test Book", UUID.randomUUID());
-        Book book2 = new Book("Second Book", UUID.randomUUID());
+        Author author = new Author("Kent", "Beck", UUID.randomUUID());
+        Book book1 = new Book("Test Book", author);
+        Book book2 = new Book("Second Book", author);
         List<Book> expectedBooks = List.of(book1, book2);
         expect(bookService.getAllBooks()).andReturn(expectedBooks);
         replayAll();
